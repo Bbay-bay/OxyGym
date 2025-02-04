@@ -27,17 +27,21 @@ public class LoginController {
     mv.addObject("userRecord",user);
     return mv;
   }
-  
-  @PostMapping("/register")
-  public ModelAndView saveUserRegisterPage(@Valid @ModelAttribute("userRecord") GymUser user, BindingResult result) {
-      if (result.hasErrors()) {
-          return new ModelAndView("NewUserRegistration", "formErrors", result.getAllErrors());
-      }
-      String encodedPassword = bcrypt.encode(user.getPassword());
-      user.setPassword(encodedPassword);
-      service.save(user);
-      return new ModelAndView("loginPage");
-  }
+
+    @PostMapping("/register")
+    public ModelAndView saveUserRegisterPage(@Valid @ModelAttribute("userRecord") GymUser user, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("newUserRegistration", "formErrors", result.getAllErrors());
+        }
+        String encodedPassword = bcrypt.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+        // Force "Member" role for all new users
+        user.setType("Member");
+
+        service.save(user);
+        return new ModelAndView("loginPage");
+    }
   
   @GetMapping("/loginpage")
   public ModelAndView showLoginPage(@RequestParam(name = "error", required = false) String error) {

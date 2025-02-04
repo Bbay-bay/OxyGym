@@ -28,7 +28,7 @@ public class GymUser implements UserDetails {
     private String email;
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")
-    private String type;
+    private String type = "Member"; // Default all new users to "Member"
 
     public String getUsername() {
         return username;

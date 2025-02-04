@@ -275,11 +275,7 @@ function passwordCheck() {
    <input type="text" placeholder="FirstName" name="firstName" required/>
    <input type="text" placeholder="LastName" name="lastName" required />
    <input type="email" placeholder="Email" name="email" required/>
-   <select id="option" name="type">
-    <option value="" disabled selected>Select user type</option>
-    <option value="admin">Admin</option>
-    <option value="member">Member</option>
-   </select>
+   <input type="hidden" name="type" value="Member">
    <input type="text" placeholder="Username" name="username" required/>
    <div class="password-container">
     <input type="password" placeholder="Password" id="pass1" name="password" required />
