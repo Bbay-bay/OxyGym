@@ -155,9 +155,7 @@
         <div class="navbar-item">
             <a href="/index" class="navbar-item">Home</a>
         </div>
-        <div class="navbar-item">
-            <a href="/about" class="navbar-item">About</a>
-        </div>
+
         <div class="navbar-item has-subnav">
             Slot Booking
             <div class="subnav">
@@ -166,7 +164,13 @@
             </div>
         </div>
         <div class="navbar-item">
+            <a href="/membership" class="navbar-item">Membership</a>
+        </div>
+        <div class="navbar-item">
         	<a href="/feedback" class="navbar-item">Feedback</a>
+        </div>
+        <div class="navbar-item">
+            <a href="/about" class="navbar-item">About</a>
         </div>
         <div class="navbar-item">
         	<a href="/contactUs" class="navbar-item">Contact Us</a>

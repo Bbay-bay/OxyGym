@@ -1,17 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Log In</title>
+    <title>OxyGym - Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
         body {
             background-size: cover;
             background-repeat: no-repeat;
@@ -20,12 +21,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            font-family: 'Montserrat', sans-serif;
-            height: 100vh;
-            margin: -20px 0 50px;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            margin: 0;
             position: relative;
         }
+
         .blur-overlay {
             position: absolute;
             top: 0;
@@ -36,130 +37,135 @@
             filter: blur(8px);
             z-index: 1;
         }
-        h1 {
-            font-weight: bold;
-            margin: 0;
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
         }
-        h2 {
-            text-align: center;
+
+        .logo span:first-child {
+            color: #C21807;
         }
-        p {
-            font-size: 14px;
-            font-weight: 100;
-            line-height: 20px;
-            letter-spacing: 0.5px;
-            margin: 20px 0 30px;
+
+        .logo span:last-child {
+            color: #2d3436;
         }
-        a {
-            color: #333;
-            font-size: 14px;
-            text-decoration: none;
-            margin: 15px 0;
-        }
-        button {
-            border-radius: 20px;
-            border: 1px solid #C21807;
-            background-color: #C21807;
-            color: #FFFFFF;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 12px 45px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: transform 80ms ease-in;
-            z-index: 2;
-            position: relative;
-        }
-        button:active {
-            transform: scale(0.95);
-        }
-        button:focus {
-            outline: none;
-        }
-        button.login {
-            background-color: transparent;
-            border-color: #FFFFFF;
-        }
-        form {
-            background-color: #d3d3d3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 0 50px;
-            height: 100%;
-            text-align: center;
-        }
-        input {
-            background-color: #eee;
-            border: none;
-            padding: 12px 15px;
-            margin: 8px 0;
-            width: 100%;
-        }
-        .password-container {
-            position: relative;
-            width: 100%;
-            display: flex;
-            align-items: center;
-        }
-        .password-container input {
-            flex: 1;
-            padding-right: 30px;
-        }
-        .password-container .toggle-password {
-            position: absolute;
-            right: 10px;
-            cursor: pointer;
-        }
+
         .container {
-            background-color: #d3d3d3;
-            border-radius: 10px;
-            box-shadow: 0 14px 28px rgba(0,0,0,0.25),
-                        0 10px 10px rgba(0,0,0,0.22);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
-            width: 768px;
-            max-width: 100%;
-            min-height: 450px;
+            width: 868px;
+            max-width: 95%;
+            min-height: 500px;
             z-index: 2;
         }
+
         .form-container {
             position: absolute;
             top: 0;
             height: 100%;
             transition: all 0.6s ease-in-out;
+            padding: 2rem;
         }
+
         .sign-in-container {
             left: 0;
             width: 50%;
             z-index: 2;
+            background: white;
         }
-        .container.right-panel-active .sign-in-container {
-            transform: translateX(100%);
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 3rem;
+            height: 100%;
+            text-align: center;
         }
-        .sign-up-container {
-            left: 0;
-            width: 50%;
-            opacity: 0;
-            z-index: 1;
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1.5rem;
         }
-        .container.right-panel-active .sign-up-container {
-            transform: translateX(100%);
-            opacity: 1;
-            z-index: 5;
-            animation: show 0.6s;
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
-        @keyframes show {
-            0%, 49.99% {
-                opacity: 0;
-                z-index: 1;
-            }
-            50%, 100% {
-                opacity: 1;
-                z-index: 5;
-            }
+
+        input:focus {
+            outline: none;
+            border-color: #C21807;
+            background-color: #fff;
         }
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            transition: color 0.3s ease;
+        }
+
+        .error-message, .success-message {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 100%;
+            margin: 10px 0;
+            animation: fadeIn 0.5s ease;
+            display: none;
+        }
+
+        .error-message {
+            background-color: #fff5f5;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+
+        .error-message.show, .success-message.show {
+            display: block;
+        }
+
+        button {
+            border-radius: 30px;
+            border: none;
+            background: #C21807;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 14px 50px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(194, 24, 7, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(194, 24, 7, 0.3);
+        }
+
         .overlay-container {
             position: absolute;
             top: 0;
@@ -167,30 +173,21 @@
             width: 50%;
             height: 100%;
             overflow: hidden;
-            transition: transform 0.6s ease-in-out;
             z-index: 100;
         }
-        .container.right-panel-active .overlay-container {
-            transform: translateX(-100%);
-        }
+
         .overlay {
-            background: #FF416C;
-            background: -webkit-linear-gradient(to right, #C21807, #C21807);
-            background: linear-gradient(to right, #C21807, #C21807);
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: 0 0;
-            color: #fff;
+            background: #C21807;
+            color: white;
             position: relative;
             left: -100%;
             height: 100%;
             width: 200%;
-            transform: translateX(0);
-            transition: transform 0.6s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .container.right-panel-active .overlay {
-            transform: translateX(50%);
-        }
+
         .overlay-panel {
             position: absolute;
             display: flex;
@@ -205,67 +202,110 @@
             transform: translateX(0);
             transition: transform 0.6s ease-in-out;
         }
-        .overlay-left {
-            transform: translateX(-20%);
+
+        .overlay-panel h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
         }
-        .container.right-panel-active .overlay-left {
-            transform: translateX(0);
+
+        .overlay-panel p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            opacity: 0.9;
         }
+
         .overlay-right {
             right: 0;
             transform: translateX(0);
         }
-        .container.right-panel-active .overlay-right {
-            transform: translateX(20%);
+
+        button.sign-up {
+            background: transparent;
+            border: 2px solid white;
+            margin-top: 1rem;
         }
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 20px;
+
+        button.sign-up:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body background="/images/BGimg.jpg">
-    <div class="blur-overlay"></div>
-    <div class="container" id="container">
-        <div align="center" class="form-container sign-in-container">
-            <h3>
-                <form method="post" action="${pageContext.request.contextPath}/login">
-                    <h1>Sign in</h1>
-                    <br/><br/>
-                    Enter User Id : <input type="text" name="username" placeholder="User Id" required/>
-                    <br/>
-                    Enter Password :
-                    <div class="password-container">
-                        <input type="password" name="password" id="password" placeholder="Password" required/>
-                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
-                    </div>
-                    <br/>
-                    <c:if test="${not empty errorMessage}">
-                        <div class="error-message">${errorMessage}</div>
-                    </c:if>
-                    <br/>
-                    <button type="submit">Sign In</button>
-                </form>
-            </h3>
-        </div>
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
-                    <button class="login" id="signUp" onclick="window.location.href='${pageContext.request.contextPath}/register'">Sign Up</button>
+<div class="blur-overlay"></div>
+<div class="container">
+    <div class="form-container sign-in-container">
+        <form method="post" action="${pageContext.request.contextPath}/login">
+            <div class="logo">
+                <span>Oxy</span><span>Gym</span>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username" required/>
+            </div>
+
+            <div class="input-group">
+                <div class="password-container">
+                    <input type="password" name="password" id="password" placeholder="Password" required/>
+                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                 </div>
+            </div>
+
+            <div id="unverifiedError" class="error-message">
+                Your email is not verified. Please check your inbox and verify your account.
+            </div>
+
+            <div id="invalidCredentials" class="error-message">
+                Invalid username or password. Please try again.
+            </div>
+
+            <div id="successMessage" class="success-message"></div>
+
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-right">
+                <h1>Welcome to OxyGym!</h1>
+                <p>Enter your personal details and start your fitness journey with us</p>
+                <button class="sign-up" onclick="window.location.href='${pageContext.request.contextPath}/register'">Sign Up</button>
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            const passwordField = document.getElementById('password');
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-        });
-    </script>
+</div>
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.has('unverified')) {
+            document.getElementById('unverifiedError').classList.add('show');
+        }
+
+        if (urlParams.has('error') && !urlParams.has('unverified')) {
+            document.getElementById('invalidCredentials').classList.add('show');
+        }
+
+        const message = '${message}';
+        if (message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.classList.add('show');
+        }
+    };
+</script>
 </body>
 </html>

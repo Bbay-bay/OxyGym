@@ -11,7 +11,7 @@ import com.GymInfo.OxyGym.bean.GymUser;
 
 public interface GymUserRepository extends JpaRepository<GymUser, String> {
  Optional<GymUser> findByUsername(String username);
- 
+ Optional<GymUser> findByVerificationToken(String verificationToken);
  @Query("SELECT username from GymUser where type='Customer'")
  public List<String> findAllMemberUsers();
 }

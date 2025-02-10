@@ -402,4 +402,9 @@ GymItem gymItem=gymItemDao.findItemById(itemId);
     public ModelAndView showcontactUs() {
         return new ModelAndView("contactUs");
     }
+
+    @GetMapping("/membership")
+    public ModelAndView showMembershipPage() {
+        return new ModelAndView("membership"); // This will load membership.jsp
+    }
 }

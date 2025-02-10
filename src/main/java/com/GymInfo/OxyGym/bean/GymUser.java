@@ -2,6 +2,8 @@ package com.GymInfo.OxyGym.bean;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -28,7 +30,16 @@ public class GymUser implements UserDetails {
     private String email;
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")
-    private String type = "Member"; // Default all new users to "Member"
+
+    @Column(nullable = false)
+    private String type = "Member"; // Ensure it never stays null
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean verified = false; // ✅ Ensures it is correctly mapped
+
+    @Column(nullable = true, length = 255)
+    private String verificationToken; // ✅ Ensures it is stored in the DB
+
 
     public String getUsername() {
         return username;
@@ -102,5 +113,22 @@ public class GymUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    // Getters and Setters
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
     }
 }
