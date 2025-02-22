@@ -106,7 +106,7 @@
         <label for="slotTime">Enter Slot Time:</label>
         <form:input path="slotTime" id="slotTime"/>
         <br/>
-        <label for="pricing">Enter Slot Price:</label>
+        <label for="pricing">Enter Slot Price $:</label>
         <form:input path="pricing" id="pricing"/>
         <br/>
         <button type="submit">Submit</button>

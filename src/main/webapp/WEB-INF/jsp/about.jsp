@@ -11,14 +11,14 @@
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f8f8f8; 
+    background-color: #f8f8f8;
   }
   .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: calc(100vh - 60px);  
-    padding: 80px 20px 20px; 
+    height: calc(100vh - 60px);
+    padding: 80px 20px 20px;
     box-sizing: border-box;
   }
   .text-content {
@@ -26,7 +26,7 @@
     color: #333;
     text-align: left;
     padding: 20px;
-    margin-top:40px; 
+    margin-top:40px;
   }
   .text-content h1 {
     font-size: 3em;
@@ -34,14 +34,14 @@
     margin: 0;
     line-height: 1.2;
     color: black;
-    font-family: 'Arial Black', Gadget, sans-serif; 
+    font-family: 'Arial Black', Gadget, sans-serif;
   }
   .text-content h2 {
     font-size: 2.5em;
     font-weight: bold;
     margin: 10px 0;
     line-height: 1.2;
-    color: #FFD700; 
+    color: #FFD700;
   }
   .text-content p {
     font-size: 1em;
@@ -52,24 +52,24 @@
     font-weight: bold;
   }
   .text-content .small {
-    font-size: 0.95em; 
+    font-size: 0.95em;
   }
   .text-content .small p {
     margin: 5px 0;
   }
   .image-content {
     max-width: 50%;
-    text-align: center; 
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .image-content img {
-    width: 100%; 
-    height: auto; 
+    width: 100%;
+    height: auto;
     max-height: 80vh;
-    display: block;  
-    margin-top: 70px; 
+    display: block;
+    margin-top: 70px;
     margin-left:50px;
   }
   .read-more-button {
@@ -83,14 +83,14 @@
     transition: background-color 0.3s ease;
     text-decoration: none;
     display: inline-block;
-    margin-top: 20px; 
+    margin-top: 20px;
   }
   .read-more-button:hover {
-    background-color: #971C07; 
+    background-color: #971C07;
   }
   @media (max-width: 768px) {
     .content {
-      flex-direction: column-reverse; 
+      flex-direction: column-reverse;
       padding: 10px;
     }
     .text-content, .image-content {

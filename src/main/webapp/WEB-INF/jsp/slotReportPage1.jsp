@@ -109,7 +109,7 @@
         <tr>
             <th>Slot Number</th>
             <th>Slot Time</th>
-            <th>Slot Price</th>
+            <th>Slot Price $</th>
             <th>Enquire</th>
             <th>Actions</th> 
         </tr>

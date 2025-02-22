@@ -25,7 +25,8 @@ public class LoginController {
   @Autowired
   private EmailService emailService; // Inject Email Service
   private static final Logger logger = Logger.getLogger(LoginController.class.getName());
-  
+
+
   @GetMapping("/register")
   public ModelAndView showUserRegistrationPage() {
     GymUser user=new GymUser();

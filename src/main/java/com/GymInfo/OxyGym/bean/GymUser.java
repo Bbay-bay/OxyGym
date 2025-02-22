@@ -3,10 +3,8 @@ package com.GymInfo.OxyGym.bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -39,6 +37,9 @@ public class GymUser implements UserDetails {
 
     @Column(nullable = true, length = 255)
     private String verificationToken; // ✅ Ensures it is stored in the DB
+
+    @Column(nullable = false)
+    private LocalDateTime createdDate = LocalDateTime.now();
 
 
     public String getUsername() {
@@ -130,5 +131,10 @@ public class GymUser implements UserDetails {
 
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdDate = LocalDateTime.now();
     }
 }

@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.GymInfo.OxyGym.bean.GymUser;
 import com.GymInfo.OxyGym.dao.GymUserRepository;
@@ -27,22 +29,36 @@ public class GymUserService implements UserDetailsService {
         repository.save(user);
     }
 
+    public String getType() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-   
-   public String getType() {
-    return type;
-   }
-   
-   public void delete(String username) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            System.out.println("🚨 Authentication is NULL or not authenticated!");
+            return null;
+        }
+
+        if (!(authentication.getPrincipal() instanceof UserDetails)) {
+            System.out.println("🚨 Authentication principal is not a UserDetails instance!");
+            return null;
+        }
+
+        String username = authentication.getName();
+        System.out.println("✅ Authenticated user: " + username);
+
+        GymUser user = findByUsername(username);
+        if (user == null) {
+            System.out.println("🚨 No user found for username: " + username);
+            return null;
+        }
+
+        System.out.println("✅ UserType found: " + user.getType());
+        return user.getType();
+    }
+
+
+    public void delete(String username) {
 	    repository.deleteById(username);
    }
-
-    /*    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        users = repository.findByUsername(username).get();
-        type = users.getType();
-        return users;
-    }*/
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

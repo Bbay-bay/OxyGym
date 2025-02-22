@@ -1,152 +1,304 @@
+<!-- index1.jsp -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1"%>
 <%@ include file="header1.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>GYM Info Club</title>
-<style>
-  body, html {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-  }
-  .content {
-  	margin:50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: calc(100vh - 60px);  
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  .content img {
-    max-height: 80%;
-    max-width: 40%;
-  }
-  .text-content {
-    max-width: 50%;
-    color: #333;
-    text-align: left;
-  }
-  .text-content h1 {
-    font-size: 3em;
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.2;
-  }
-  .text-content .red {
-    color: #C21807;
-  }
-  .text-content .yellow {
-    color: #FFD700;
-  }
-  .text-content p {
-    font-size: 1em;
-    margin: 20px 0;
-    line-height: 1.5;
-  }
-  .btn-container {
-    display: flex;
-    align-items: center;
-    margin: 40px 0; 
-  }
-  .btn-get-started {
-    background-color: #C21807;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1em;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 20px;
-  }
-  .btn-get-started:hover {
-    background-color: #a51406;
-  }
-  .video-link {
-    display: flex;
-    align-items: center;
-    color: #C21807;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .video-link img {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-  }
-  .video-link span {
-    display: inline-block;
-  }
-  .stats {
-    margin-top: 20px;
-    font-size: 1.1em;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .stat-item {
-    text-align: center;
-    position: relative;
-    padding: 0 20px;
-  }
-  .stat-item::after {
-    content: '';
-    position: absolute;
-    top: 10%;
-    bottom: 10%;
-    right: 0;
-    width: 1px;
-    background-color: #C21807;
-  }
-  .stat-item:last-child::after {
-    display: none;
-  }
-  .stat-number {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  .stat-text {
-    font-size: 1em;
-  }
-</style>
+  <meta charset="ISO-8859-1">
+  <title>GYM Dashboard</title>
+  <!-- Include Chart.js for visualizations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
+
+    .dashboard-container {
+      padding: 20px;
+      padding-top: 80px; /* Add this line instead of margin-top */
+      margin: 20px;
+    }
+
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-card h3 {
+      color: #666;
+      margin: 0 0 10px 0;
+      font-size: 1.1em;
+    }
+
+    .stat-card .number {
+      color: #C21807;
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .stat-card .trend {
+      color: #28a745;
+      font-size: 0.9em;
+    }
+
+    .charts-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .chart-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .chart-card h3 {
+      color: #333;
+      margin: 0 0 20px 0;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .action-button {
+      background-color: #C21807;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-button:hover {
+      background-color: #a51406;
+    }
+  </style>
 </head>
 <body>
-<div class="content">
-  <img src="/images/index.jpg" alt="Gym Image">
-  <div class="text-content">
-    <h1><span>GET HEALTHY BODY</span></h1>
-    <h1><span>WITH THE PERFECT</span></h1>
-    <h1><span class="yellow">EXERCISES</span></h1>
-    <p>We are always there to help you to make a healthy body and mind through the power of fitness.</p>
-    <div class="btn-container">
-      <button class="btn-get-started">GET STARTED</button>
-      <div class="video-link">
-        <img src="/images/play.jpg" alt="Video Icon">
-        <span>Watch Video</span>
+<div class="dashboard-container">
+  <!-- Statistics Cards -->
+  <div class="stats-cards">
+    <div class="stat-card">
+      <h3>Total Users</h3>
+      <div class="number">
+        <fmt:formatNumber value="${dashboard.totalUsers}" pattern="#,###"/>
+      </div>
+      <div class="trend">
+        <c:if test="${dashboard.userGrowthRate > 0}">&#8593;</c:if>
+        <c:if test="${dashboard.userGrowthRate < 0}">&#8595;</c:if>
+        <fmt:formatNumber value="${dashboard.userGrowthRate}" pattern="#.#"/>% this month
       </div>
     </div>
-    <div class="stats">
-      <div class="stat-item">
-        <div class="stat-number">105+</div>
-        <div class="stat-text">Expert trainers</div>
+    <div class="stat-card">
+      <h3>Active Accounts</h3>
+      <div class="number">
+        <fmt:formatNumber value="${dashboard.activeUsers}" pattern="#,###"/>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">970+</div>
-        <div class="stat-text">Members joined</div>
+      <div class="trend">
+        <c:if test="${dashboard.userGrowthRate > 0}">&#8593;</c:if>
+        <fmt:formatNumber value="${dashboard.userGrowthRate}" pattern="#.#"/>% this month
       </div>
-      <div class="stat-item">
-        <div class="stat-number">135+</div>
-        <div class="stat-text">Fitness programs</div>
+    </div>
+    <div class="stat-card">
+      <h3>Paid Memberships</h3>
+      <div class="number">
+        <fmt:formatNumber value="${dashboard.paidMemberships}" pattern="#,###"/>
+      </div>
+      <div class="trend">
+        <c:if test="${dashboard.revenueGrowthRate > 0}">&#8593;</c:if>
+        <fmt:formatNumber value="${dashboard.revenueGrowthRate}" pattern="#.#"/>% this month
+      </div>
+    </div>
+    <div class="stat-card">
+      <h3>Monthly Revenue</h3>
+      <div class="number">$
+        <fmt:formatNumber value="${dashboard.monthlyRevenue}" pattern="#,###.##"/>
+      </div>
+      <div class="trend">
+        <c:if test="${dashboard.revenueGrowthRate > 0}">&#8593;</c:if>
+        <fmt:formatNumber value="${dashboard.revenueGrowthRate}" pattern="#.#"/>% this month
       </div>
     </div>
   </div>
+
+  <!-- Charts Container -->
+  <div class="charts-container">
+    <div class="chart-card">
+      <h3>User Growth Over Time</h3>
+      <canvas id="userGrowthChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Monthly Revenue</h3>
+      <canvas id="revenueChart"></canvas>
+    </div>
+  </div>
 </div>
+
+<script>
+  var userGrowthData = [
+    <c:forEach items="${dashboard.userGrowthData}" var="data" varStatus="status">
+    {
+      "month": "${data.month}",
+      "count": ${data.count}
+    }${!status.last ? ',' : ''}
+    </c:forEach>
+  ];
+
+  var revenueData = [
+    <c:forEach items="${dashboard.revenueData}" var="data" varStatus="status">
+    {
+      "month": "${data.month}",
+      "amount": ${data.amount}
+    }${!status.last ? ',' : ''}
+    </c:forEach>
+  ];
+
+  console.log("? User Growth Data:", userGrowthData);
+  console.log("? Revenue Data:", revenueData);
+
+  // Check if data exists before rendering
+  if (userGrowthData && userGrowthData.length > 0) {
+    const userGrowthChart = new Chart(document.getElementById('userGrowthChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: userGrowthData.map(data => data.month),
+        datasets: [{
+          label: 'Total Users',
+          data: userGrowthData.map(data => data.count),
+          borderColor: '#C21807',
+          backgroundColor: 'rgba(194, 24, 7, 0.1)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          pointBackgroundColor: '#C21807'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              precision: 0
+            },
+            grid: {
+              drawBorder: false
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+  } else {
+    console.warn("? No user growth data available!");
+  }
+
+  if (revenueData && revenueData.length > 0) {
+    const revenueChart = new Chart(document.getElementById('revenueChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: revenueData.map(data => data.month),
+        datasets: [{
+          label: 'Monthly Revenue ($)',
+          data: revenueData.map(data => data.amount),
+          backgroundColor: 'rgba(255, 215, 0, 0.6)',
+          borderColor: '#FFD700',
+          borderWidth: 1,
+          borderRadius: 5,
+          hoverBackgroundColor: 'rgba(255, 215, 0, 0.8)'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return '$ ' + context.raw.toFixed(2);
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return '$' + value.toFixed(2);
+              }
+            },
+            grid: {
+              drawBorder: false
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+  } else {
+    console.warn("? No revenue data available!");
+  }
+</script>
+
 </body>
 </html>

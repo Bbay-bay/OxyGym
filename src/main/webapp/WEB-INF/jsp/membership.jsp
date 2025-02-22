@@ -704,6 +704,11 @@
     }
 
     function calculateMembershipEndDate(startDate, amount) {
+        if (!(startDate instanceof Date) || isNaN(startDate)) {
+            console.error('Invalid start date:', startDate);
+            startDate = new Date(); // Fallback to current date
+        }
+
         const monthsMap = {
             30: 1,    // 1 month plan
             80: 3,    // 3 months plan
@@ -718,80 +723,80 @@
     }
 
     function updateCurrentPlanDisplay(payment, endDate) {
-        // Get all required DOM elements
         const currentPlanSection = document.getElementById('current-plan');
         const planTitle = document.getElementById('current-plan-title');
         const planPrice = document.getElementById('current-plan-price');
         const planFeatures = document.getElementById('current-plan-features');
 
-        // Early return if any essential element is missing
         if (!currentPlanSection || !planTitle || !planPrice || !planFeatures) {
-            console.error('❌ Required DOM elements not found');
+            console.error('Required DOM elements not found');
             return;
         }
 
         try {
-            // Parse the payment amount
             const amount = parseFloat(payment.amount);
             if (isNaN(amount)) {
                 throw new Error('Invalid payment amount');
             }
 
-            // Calculate end date if not provided
+            // Ensure we have a valid end date
             let membershipEndDate = endDate;
-            if (!membershipEndDate) {
-                const startDate = new Date();
+            if (!membershipEndDate || !(membershipEndDate instanceof Date) || isNaN(membershipEndDate)) {
+                const startDate = new Date(payment.paymentDate);
                 membershipEndDate = calculateMembershipEndDate(startDate, amount);
             }
 
-            // Format the end date
-            const formattedEndDate = new Date(membershipEndDate).toLocaleDateString('en-US', {
+            // Format the end date with explicit options
+            const formattedEndDate = membershipEndDate.toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric'
+                day: 'numeric',
+                timeZone: 'UTC'  // Ensure consistent timezone handling
             });
 
             // Get plan details
             const planDetails = getPlanDetails(amount);
-            if (!planDetails) {
-                throw new Error('Invalid plan details');
-            }
 
-            // Update plan title
+            // Update display elements
             planTitle.textContent = planDetails.title;
-
-            // Update plan price
             planPrice.textContent = `$${amount}`;
 
-            // Clear existing features
+            // Clear and rebuild features list
             planFeatures.innerHTML = '';
 
-            // Add membership expiration date
+            // Add membership expiration date as first feature
             const expirationLi = document.createElement('li');
             expirationLi.textContent = `Membership valid until: ${formattedEndDate}`;
             planFeatures.appendChild(expirationLi);
 
-            // Add plan features
+            // Add remaining features
             planDetails.features.forEach(feature => {
                 const li = document.createElement('li');
                 li.textContent = feature;
                 planFeatures.appendChild(li);
             });
 
-            // Show the current plan section
             currentPlanSection.classList.remove('hidden');
 
+            // Also update the status message
+            showMembershipStatusMessage(membershipEndDate);
+
         } catch (error) {
-            console.error('❌ Error updating plan display:', error);
-            return;
+            console.error('Error updating plan display:', error);
+            // Add user-friendly error handling here
         }
     }
 
-
     function showMembershipStatusMessage(endDate) {
+        if (!endDate || !(endDate instanceof Date) || isNaN(endDate)) {
+            console.error('Invalid end date provided:', endDate);
+            return;
+        }
+
         const today = new Date();
         const daysRemaining = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
 
+        // Format the message with the actual number of days
         let title, message;
         if (daysRemaining > 30) {
             title = 'Active Membership';
@@ -803,6 +808,12 @@
             title = 'Membership Expired';
             message = 'Your membership has expired. Please renew to continue enjoying our services.';
         }
+
+        // Update modal content
+        const modalTitle = document.querySelector('.membership-header h1');
+        const modalMessage = document.querySelector('.membership-header p');
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalMessage) modalMessage.textContent = message;
 
         showPaymentModal(true, title, message);
     }

@@ -1,6 +1,9 @@
 package com.GymInfo.OxyGym.controller;
 
 import java.util.List;
+
+import com.GymInfo.OxyGym.dto.DashboardDTO;
+import com.GymInfo.OxyGym.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,6 +55,8 @@ public class GymController {
     private GymBookDao gymBookDao;
     @Autowired
     private GymBookRepository gymBookRepository;
+    @Autowired
+    private DashboardService dashboardService;
     
     @ModelAttribute
     public void addAttributes(Model model) {
@@ -61,17 +66,44 @@ public class GymController {
             model.addAttribute("username", currentUsername);
         }
     }
-    
+
     @GetMapping("/index")
     public ModelAndView showIndexPage() {
-      String indexPage="";
-      String userType=userService.getType();
-      if(userType.equalsIgnoreCase("Admin"))
-        indexPage="index1";
-      else if(userType.equalsIgnoreCase("Member"))
-        indexPage="index2";
-      return new ModelAndView(indexPage);
+        String indexPage = "index1"; // Default page
+        String userType = userService.getType();
+
+        if (userType == null) {
+            System.out.println("Warning: userType is null. Defaulting to Admin view.");
+            return new ModelAndView("index1"); // Ensure the page loads even if userType is null
+        }
+
+        if (userType.equalsIgnoreCase("Admin")) {
+            indexPage = "index1";
+        } else if (userType.equalsIgnoreCase("Member")) {
+            indexPage = "index2";
+        }
+
+        ModelAndView mv = new ModelAndView(indexPage);
+
+        try {
+            // Fetch dashboard data only after ensuring authentication works
+            DashboardDTO dashboardData = dashboardService.getDashboardData();
+            if (dashboardData != null) {
+                mv.addObject("dashboard", dashboardData);
+                System.out.println("Dashboard data successfully fetched: " + dashboardData);
+                System.out.println("📈 User Growth Data: " + dashboardData.getUserGrowthData());
+                System.out.println("💰 Revenue Data: " + dashboardData.getRevenueData());
+            } else {
+                System.out.println("Warning: Dashboard data is null.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error fetching dashboard data: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return mv;
     }
+
 
     @GetMapping("/about")
     public ModelAndView showAboutUSPage() {

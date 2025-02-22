@@ -2,7 +2,6 @@ package com.GymInfo.OxyGym.bean;
 
 
 public class Item  {
-
   private long itemId;
   private String itemName;
   private Integer totalSeat;

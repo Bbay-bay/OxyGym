@@ -51,8 +51,8 @@ public class GymItemService {
         SlotItemEmbed embed=new SlotItemEmbed(slotId, itemId);
         SlotItem slotItem=new SlotItem(embed);
         slotItemDao.save(slotItem);
-      } //end of for
-    } //end of if
-  } //end of function
+      }
+    }
+  }
   
 }

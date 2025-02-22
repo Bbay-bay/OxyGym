@@ -1,16 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ include file="header2.jsp" %>
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Contact Us</title>
-<style>
-    body {
+    <meta charset="ISO-8859-1">
+    <title>Contact Us</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
             background-image: url('${pageContext.request.contextPath}/images/BGimg.jpg');
             background-size: cover;
             background-repeat: no-repeat;
@@ -26,7 +21,8 @@
             position: relative;
             overflow: hidden;
         }
-    .blur-overlay {
+
+        .blur-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -36,62 +32,153 @@
             filter: blur(8px);
             z-index: 1;
         }
-    .container {
+
+        .container {
             position: relative;
             z-index: 2;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 100px; /* Space for header */
         }
-    .contact-info {
-        margin: 20px 0;
-        padding: 20px;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        z-index: 2;
-    }
-    .contact-info h3 {
-        margin-top: 0;
-        color: #333;
-    }
-    .contact-info .info-item {
-        margin: 15px 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .contact-info .info-item img {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-    }
-    .contact-info .info-item p {
-        margin: 0;
-        color: #555;
-    }
-</style>
+
+        .contact-info {
+            margin: 20px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-item {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateX(10px);
+        }
+
+        .info-item i {
+            width: 40px;
+            height: 40px;
+            background: #333;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.2em;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-content h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .info-content p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 1em;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .social-media {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .social-media a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+
+        .social-media a:hover {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 80px 20px 20px;
+            }
+
+            .contact-info {
+                padding: 20px;
+            }
+
+            .info-item {
+                flex-direction: row;
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="blur-overlay"></div>
-    <div class="container">
-        <div class="contact-info">
-            <h3>Contact Information</h3>
-            <div class="info-item">
-                <img src="${pageContext.request.contextPath}/images/address-icon.jpg" alt="Address Icon"/>
-                <p>1234 Main St, City, Country</p>
-            </div>
-            <div class="info-item">
-                <img src="${pageContext.request.contextPath}/images/email-icon.jpg" alt="Email Icon"/>
-                <p>contact@example.com</p>
-            </div>
-            <div class="info-item">
-                <img src="${pageContext.request.contextPath}/images/phone-icon.jpg" alt="Phone Icon"/>
-                <p>(123) 456-7890</p>
-            </div>
-            <div class="info-item">
-                <img src="${pageContext.request.contextPath}/images/instagram-icon.jpg" alt="Instagram Icon"/>
-                <p>@example_instagram</p>
+<%@ include file="header2.jsp" %>
+<div class="blur-overlay"></div>
+<div class="container">
+    <div class="contact-info">
+        <h2 class="section-title">Contact Information</h2>
+
+        <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div class="info-content">
+                <h3>Location</h3>
+                <p>Mesnana, Tanger, Morocco</p>
             </div>
         </div>
+
+        <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <div class="info-content">
+                <h3>Email</h3>
+                <p>Oxygym@gmail.com</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <i class="fas fa-phone-alt"></i>
+            <div class="info-content">
+                <h3>Phone</h3>
+                <p>(212) 648-4790</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <i class="fab fa-instagram"></i>
+            <div class="info-content">
+                <h3>Social Media</h3>
+                <p>@Oxy_Gym</p>
+            </div>
+        </div>
+
+        <div class="social-media">
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
     </div>
+</div>
 </body>
 </html>

@@ -2,7 +2,7 @@ package com.GymInfo.OxyGym.service;
 
 import com.GymInfo.OxyGym.bean.Payment;
 import com.GymInfo.OxyGym.bean.GymUser;
-import com.GymInfo.OxyGym.bean.PaymentType; // ✅ Updated import
+import com.GymInfo.OxyGym.bean.PaymentType;
 import com.GymInfo.OxyGym.dao.PaymentRepository;
 import com.GymInfo.OxyGym.dao.GymUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

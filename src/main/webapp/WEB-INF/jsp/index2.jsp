@@ -126,10 +126,10 @@
     <h1><span class="yellow">EXERCISES</span></h1>
     <p>We are always there to help you to make a healthy body and mind through the power of fitness.</p>
     <div class="btn-container">
-      <button class="btn-get-started">GET STARTED</button>
+      <button class="btn-get-started" onclick="window.location.href='${pageContext.request.contextPath}/membership'">GET STARTED</button>
       <div class="video-link">
         <img src="/images/play.jpg" alt="Video Icon">
-        <span>Watch Video</span>
+        <span>Pay Your Membership Now</span>
       </div>
     </div>
     <div class="stats">
