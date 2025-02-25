@@ -28,7 +28,7 @@ public class PaymentController {
 
     private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
-    private static final String STRIPE_SECRET_KEY = "sk_test_51QpWQoLPlhJt7p2osuBIHB9XmQrK6raD7lZE2OlyL8CfOBxoPt3se75pnzhyURAxDmDvb42Y6NF03QENd8tAWs3q00eVajDQ5w"; // Replace with your Stripe secret key
+    private static final String STRIPE_SECRET_KEY = ""; // Replace with your Stripe secret key
 
     @PostMapping("/create-payment-intent")
     public Map<String, String> createPaymentIntent(@RequestBody Map<String, String> payload) {
