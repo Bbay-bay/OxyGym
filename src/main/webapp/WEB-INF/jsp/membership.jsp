@@ -646,7 +646,7 @@
 <script>
 
     let selectedAmount = 0;
-    const stripe = Stripe("pk_test_51QpWQoLPlhJt7p2og3NYn1R0I5jN5P88UHoIqKlNkWzRanGgm2a7Uxcoyl5E03Zzd7q3Q38Hq1HNBHG8hIiWXapC00NutIW1QQ");
+    const stripe = Stripe("Replace_with_your_stripe_api_key"); <!--############################################################################-->
     let elements;
     let paymentElement;
 
